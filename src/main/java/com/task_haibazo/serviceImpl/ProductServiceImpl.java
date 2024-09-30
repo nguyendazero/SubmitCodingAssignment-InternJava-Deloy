@@ -64,9 +64,9 @@ public class ProductServiceImpl implements ProductService {
 
 
 	@Override
-	public APICustomize<ProductDetailResponse> product(long productId) {
+	public APICustomize<ProductDetailResponse> product(long id) {
 	
-        Optional<Product> productOpt = productRepository.findById(productId);
+        Optional<Product> productOpt = productRepository.findById(id);
 
         if (productOpt.isPresent()) {
             Product product = productOpt.get();

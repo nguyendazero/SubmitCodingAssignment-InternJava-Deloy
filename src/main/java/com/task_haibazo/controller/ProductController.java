@@ -50,9 +50,9 @@ public class ProductController {
 	    return new ResponseEntity<>(response, headers, HttpStatus.OK);
 	}
 	
-	@GetMapping("/{productId}")
-    public ResponseEntity<APICustomize<ProductDetailResponse>> getProductDetail(@PathVariable long productId) {
-        APICustomize<ProductDetailResponse> response = productService.product(productId);
+	@GetMapping("/{id}")
+    public ResponseEntity<APICustomize<ProductDetailResponse>> product(@PathVariable long id) {
+        APICustomize<ProductDetailResponse> response = productService.product(id);
         
         HttpHeaders headers = new HttpHeaders();
         if(response.getResult() == null) {
