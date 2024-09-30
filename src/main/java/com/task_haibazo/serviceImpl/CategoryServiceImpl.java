@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.task_haibazo.dto.response.APICustomize;
@@ -28,7 +29,9 @@ public class CategoryServiceImpl implements CategoryService{
 	            .collect(Collectors.toList());
 
 	    String message = categories.isEmpty() ? "No categories found!" : "All categories retrieved successfully!";
-
-	    return new APICustomize<>( message, categoryResponseList);
+	    int statusCode = categories.isEmpty() ? HttpStatus.NOT_FOUND.value() : HttpStatus.OK.value();
+	    
+	    // Tạo API chuẩn với statuCode, message, result
+	    return new APICustomize<>(statusCode, message, categoryResponseList);
 	}
 }

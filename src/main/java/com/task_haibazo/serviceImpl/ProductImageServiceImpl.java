@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.task_haibazo.dto.response.APICustomize;
@@ -25,8 +26,10 @@ public class ProductImageServiceImpl implements ProductImageService{
                 .collect(Collectors.toList());
 
         String message = productImages.isEmpty() ? "No product images found!" : "Product images retrieved successfully!";
-
-        return new APICustomize<>(message, productImageResponseList);
+        int statusCode = productImages.isEmpty() ? HttpStatus.NOT_FOUND.value() : HttpStatus.OK.value();
+        
+        // Tạo API chuẩn với statuCode, message, result
+        return new APICustomize<>(statusCode, message, productImageResponseList);
     }
 
 }

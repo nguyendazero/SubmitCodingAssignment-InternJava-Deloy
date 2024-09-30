@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.task_haibazo.dto.response.APICustomize;
@@ -26,7 +27,9 @@ public class SizeServiceImpl implements SizeService{
 	            .collect(Collectors.toList());
 
 	    String message = sizes.isEmpty() ? "No sizes found!" : "All sizes retrieved successfully!";
-
-	    return new APICustomize<>(message, sizeResponseList);
+	    int statusCode = sizes.isEmpty() ? HttpStatus.NOT_FOUND.value() : HttpStatus.OK.value();
+	    
+	    // Tạo API chuẩn với statuCode, message, result
+	    return new APICustomize<>(statusCode, message, sizeResponseList);
 	}
 }
