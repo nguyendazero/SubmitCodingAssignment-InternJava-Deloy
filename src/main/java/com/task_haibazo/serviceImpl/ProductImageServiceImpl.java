@@ -19,6 +19,7 @@ public class ProductImageServiceImpl implements ProductImageService{
 	@Autowired
     private ProductImageRepository productImageRepository;
 
+	@Override
     public APICustomize<List<ProductImageResponse>> productImagesByProductId(long productId) {
         List<ProductImage> productImages = productImageRepository.findByProductId(productId);
         List<ProductImageResponse> productImageResponseList = productImages.stream()

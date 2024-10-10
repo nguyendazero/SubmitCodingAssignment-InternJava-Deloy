@@ -51,6 +51,8 @@ public class ProductServiceImpl implements ProductService {
         List<ProductResponse> productResponses = pagedProducts.stream()
                 .map(product -> new ProductResponse(
                         product.getId(),
+                        product.getCategory().getId(),
+                        product.getCategory().getCategorName(),
                         product.getProductName(),
                         product.getPrice(),
                         product.getDiscount(),

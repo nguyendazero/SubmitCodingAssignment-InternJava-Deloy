@@ -13,7 +13,8 @@ import com.task_haibazo.entity.Product;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long>{
-	@Query("SELECT p FROM Product p " +
+	@Query("SELECT p, c FROM Product p " +
+			   "JOIN p.category c " + 
 		       "JOIN p.productOptions po " +
 		       "LEFT JOIN p.productStyles ps ON ps.product.id = p.id " +
 		       "LEFT JOIN ps.style s ON s.id = ps.style.id " +
