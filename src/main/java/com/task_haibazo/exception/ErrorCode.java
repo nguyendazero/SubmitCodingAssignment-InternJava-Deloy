@@ -2,8 +2,6 @@ package com.task_haibazo.exception;
 
 public enum ErrorCode {
 	
-	PRODUCT_NOT_FOUND("404","Product Not Found"),
-	INVALID_PAGE_PARAMETER("400", "Page parameter Is Invalid"),
     HTTP_REQUEST_ENDPOINT_SUPPORT("9999","BAD ENDPOINT");
 
 	private String code = "9999";

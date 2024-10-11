@@ -11,28 +11,10 @@ import com.task_haibazo.dto.response.ErrorResponse;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-	
-    @ExceptionHandler(ProductNotFound.class)
-    public ResponseEntity<ErrorResponse> handleProductNotFound(ProductNotFound ex) {
-        ErrorResponse errorResponse = new ErrorResponse(
-            ex.getErrorCode().getMessage(), 
-            "Error Code: " + ex.getErrorCode().getCode() 
-        );
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
-    }
     
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<ErrorResponse> handleTypeMismatchException(MethodArgumentTypeMismatchException ex) {
-        // Kiểm tra nếu lỗi liên quan đến tham số 'page'
-        if ("page".equals(ex.getName())) {
-            ErrorResponse errorResponse = new ErrorResponse(
-                    "Page parameter must be a non-negative integer.", 
-                    "Error Code: 400"
-            );
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
-        }
-
-        // Xử lý các tham số khác nếu cần
+        // Xử lý khi truyền lỗi các tham số
         ErrorResponse errorResponse = new ErrorResponse(
                 "Invalid parameter: " + ex.getName(), 
                 "Error Code: 400"
@@ -43,6 +25,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public ResponseEntity<ErrorResponse> handleGlobalException(Exception ex) {
+    	//Xử lý các lỗi khác
         ErrorResponse errorResponse = new ErrorResponse(
             "An unexpected error occurred chung", 
             ex.getMessage() 
