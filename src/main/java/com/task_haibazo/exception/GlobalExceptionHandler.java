@@ -13,7 +13,6 @@ import com.task_haibazo.dto.response.ErrorResponse;
 public class GlobalExceptionHandler {
 	
     @ExceptionHandler(ProductNotFound.class)
-    @ResponseBody
     public ResponseEntity<ErrorResponse> handleProductNotFound(ProductNotFound ex) {
         ErrorResponse errorResponse = new ErrorResponse(
             ex.getErrorCode().getMessage(), 
@@ -23,11 +22,20 @@ public class GlobalExceptionHandler {
     }
     
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    @ResponseBody
-    public ResponseEntity<ErrorResponse> handlePageInvalid(PageInvalid pi) {
+    public ResponseEntity<ErrorResponse> handleTypeMismatchException(MethodArgumentTypeMismatchException ex) {
+        // Kiểm tra nếu lỗi liên quan đến tham số 'page'
+        if ("page".equals(ex.getName())) {
+            ErrorResponse errorResponse = new ErrorResponse(
+                    "Page parameter must be a non-negative integer.", 
+                    "Error Code: 400"
+            );
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+        }
+
+        // Xử lý các tham số khác nếu cần
         ErrorResponse errorResponse = new ErrorResponse(
-            pi.getErrorCode().getMessage(), 
-            "Error Code: " + pi.getErrorCode().getCode() 
+                "Invalid parameter: " + ex.getName(), 
+                "Error Code: 400"
         );
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
@@ -35,10 +43,9 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public ResponseEntity<ErrorResponse> handleGlobalException(Exception ex) {
-        // Tạo ErrorResponse cho các lỗi khác
         ErrorResponse errorResponse = new ErrorResponse(
-            "An unexpected error occurred", // Thông điệp lỗi chung
-            ex.getMessage() // Chi tiết lỗi
+            "An unexpected error occurred chung", 
+            ex.getMessage() 
         );
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
     }

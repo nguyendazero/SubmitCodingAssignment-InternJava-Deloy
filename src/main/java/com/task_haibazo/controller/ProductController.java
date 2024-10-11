@@ -41,12 +41,10 @@ public class ProductController {
 			@RequestParam(defaultValue = "10") int size) {
 
 		HttpHeaders headers = new HttpHeaders();
-		// Tạo ra list products để trả về theo các tham số truyền vào
 		APICustomize<List<ProductResponse>> response = productService.products(sizeId, minPrice, maxPrice, colorId,
 				styleId, categoryId, sortBy, sortOrder, page, size);
 		if (response.getResult().isEmpty()) {
-			// Nếu list trống thì trả về not found
-			return new ResponseEntity<>(response, headers, HttpStatus.NOT_FOUND);
+			throw new ProductNotFound(ErrorCode.PRODUCT_NOT_FOUND);
 		}
 		return new ResponseEntity<>(response, headers, HttpStatus.OK);
 	}
