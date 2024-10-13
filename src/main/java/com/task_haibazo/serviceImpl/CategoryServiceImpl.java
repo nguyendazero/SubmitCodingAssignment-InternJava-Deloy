@@ -36,5 +36,4 @@ public class CategoryServiceImpl implements CategoryService{
 
 	    return new APICustomize<>(ApiError.OK.getCode(), ApiError.OK.getMessage(), categoryResponseList);
 	}
-
 }

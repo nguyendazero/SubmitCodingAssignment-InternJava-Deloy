@@ -3,6 +3,8 @@ package com.task_haibazo.entity;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
+import com.task_haibazo.validation.annotation.ValidProductName;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -31,6 +33,7 @@ public class Product {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
+	@ValidProductName(message = "Tên sản phẩm không được chứa số model")
 	@Column(name = "product_name",nullable = false)
 	private String productName;
 	

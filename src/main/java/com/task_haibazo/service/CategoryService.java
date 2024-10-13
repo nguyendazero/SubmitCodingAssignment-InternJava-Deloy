@@ -7,6 +7,5 @@ import com.task_haibazo.dto.response.CategoryResponse;
 
 public interface CategoryService {
 	
-	 public APICustomize<List<CategoryResponse>> categories() ;
-	 
+	 public APICustomize<List<CategoryResponse>> categories() ; 
 }
