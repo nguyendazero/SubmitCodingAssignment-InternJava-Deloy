@@ -47,9 +47,6 @@ public class ProductController {
 	public ResponseEntity<APICustomize<ProductDetailResponse>> product(@PathVariable long id) {
 
         APICustomize<ProductDetailResponse> response = productService.product(id);
-        if (response.getResult() == null) {
-        	return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-        }
         return ResponseEntity.ok(response);
     }
 }

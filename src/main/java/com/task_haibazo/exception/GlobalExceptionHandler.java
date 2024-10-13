@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import com.task_haibazo.dto.response.APICustomize;
 import com.task_haibazo.dto.response.ErrorResponse;
+import com.task_haibazo.enums.ApiError;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -20,6 +22,20 @@ public class GlobalExceptionHandler {
                 "Error Code: 400"
         );
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    }
+    
+    @ExceptionHandler(ProductNotFoundException.class)
+    public ResponseEntity<APICustomize<String>> handleProductNotFoundException(ProductNotFoundException ex) {
+        //Xử lý ProductNotFound
+    	APICustomize<String> response = new APICustomize<>(ApiError.NOT_FOUND.getCode(), ex.getMessage(), null);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+    
+    @ExceptionHandler(InvalidPageOrSizeException.class)
+    public ResponseEntity<APICustomize<String>> handleInvalidPageOrSizeException(InvalidPageOrSizeException ex) {
+        //Xử lý ProductNotFound
+    	APICustomize<String> response = new APICustomize<>(ApiError.BAD_REQUEST.getCode(), ex.getMessage(), null);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
     @ExceptionHandler(Exception.class)

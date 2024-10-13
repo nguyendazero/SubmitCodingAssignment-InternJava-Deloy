@@ -16,6 +16,8 @@ import com.task_haibazo.dto.response.ProductResponse;
 import com.task_haibazo.dto.response.SizeResponse;
 import com.task_haibazo.entity.Product;
 import com.task_haibazo.enums.ApiError;
+import com.task_haibazo.exception.InvalidPageOrSizeException;
+import com.task_haibazo.exception.ProductNotFoundException;
 import com.task_haibazo.repository.ProductRepository;
 import com.task_haibazo.service.ColorService;
 import com.task_haibazo.service.ProductImageService;
@@ -40,6 +42,12 @@ public class ProductServiceImpl implements ProductService {
         
         List<Product> products = productRepository.findProducts(sizeId, minPrice, maxPrice, colorId, styleId,
                 categoryId, sortBy, sortOrder);
+
+        if (page < 0 || size < 0) {
+            throw (page < 0) 
+                ? new InvalidPageOrSizeException("Page không được nhỏ hơn 0") 
+                : new InvalidPageOrSizeException("Size không được nhỏ hơn 0");
+        }
 
         int start = page * size;
         int end = Math.min(start + size, products.size());
@@ -91,7 +99,7 @@ public class ProductServiceImpl implements ProductService {
             );
             return new APICustomize<>(ApiError.OK.getCode(), ApiError.OK.getMessage(), productDetail);
         } else {
-            return new APICustomize<>(ApiError.NOT_FOUND.getCode(), ApiError.NOT_FOUND.getMessage(), null);
+        	throw new ProductNotFoundException("Product with ID " + id + " not found.");
         }
     }
 }
