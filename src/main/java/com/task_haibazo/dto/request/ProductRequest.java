@@ -9,6 +9,7 @@ import com.task_haibazo.validation.annotation.ValidProductName;
 
 import jakarta.persistence.Lob;
 import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
@@ -16,11 +17,12 @@ import lombok.Data;
 public class ProductRequest {
 
     @ValidProductName(message = "Tên sản phẩm không được chứa số")
-    @NotNull(message = "Tên sản phẩm không được để trống")
+    @NotBlank(message = "Tên sản phẩm không được để trống")
+    @NotNull(message = "Tên sản phẩm không được để null")
     private String productName;
 
     @Lob
-    @NotNull(message = "Mô tả không được để trống")
+    @NotNull(message = "Mô tả không được để null")
     private String description;
     
     @Min(0)

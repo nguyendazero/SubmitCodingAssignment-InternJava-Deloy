@@ -49,6 +49,13 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
     
+    @ExceptionHandler(ListProductEmptyException.class)
+    public ResponseEntity<APICustomize<String>> handleListProductEmptyException(ListProductEmptyException ex) {
+        //Xử lý List Product Empty
+    	APICustomize<String> response = new APICustomize<>(ApiError.NOT_FOUND.getCode(), ex.getMessage(), null);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+    
     @ExceptionHandler(InvalidPageOrSizeException.class)
     public ResponseEntity<APICustomize<String>> handleInvalidPageOrSizeException(InvalidPageOrSizeException ex) {
         //Xử lý ProductNotFound

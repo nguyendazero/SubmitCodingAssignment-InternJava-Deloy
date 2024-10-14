@@ -1,6 +1,5 @@
 package com.task_haibazo.serviceImpl;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -17,6 +16,7 @@ import com.task_haibazo.dto.response.SizeResponse;
 import com.task_haibazo.entity.Product;
 import com.task_haibazo.enums.ApiError;
 import com.task_haibazo.exception.InvalidPageOrSizeException;
+import com.task_haibazo.exception.ListProductEmptyException;
 import com.task_haibazo.exception.ProductNotFoundException;
 import com.task_haibazo.repository.ProductRepository;
 import com.task_haibazo.service.ColorService;
@@ -43,10 +43,10 @@ public class ProductServiceImpl implements ProductService {
         List<Product> products = productRepository.findProducts(sizeId, minPrice, maxPrice, colorId, styleId,
                 categoryId, sortBy, sortOrder);
 
-        if (page < 0 || size < 0) {
+        if (page < 0 || size <= 0) {
             throw (page < 0) 
                 ? new InvalidPageOrSizeException("Page không được nhỏ hơn 0") 
-                : new InvalidPageOrSizeException("Size không được nhỏ hơn 0");
+                : new InvalidPageOrSizeException("Size không được nhỏ hơn hoặc bằng 0");
         }
 
         int start = page * size;
@@ -54,7 +54,7 @@ public class ProductServiceImpl implements ProductService {
 
 
         if (products.isEmpty() || start >= products.size() || start < 0) {
-            return new APICustomize<>(ApiError.NOT_FOUND.getCode(), ApiError.NOT_FOUND.getMessage(), Collections.emptyList());
+        	throw new ListProductEmptyException("Danh sách rỗng, không tìm thấy sản phẩm nào");
         }
 
         List<Product> pagedProducts = products.subList(start, end);

@@ -21,21 +21,23 @@ public interface ProductRepository extends JpaRepository<Product, Long>{
 		       "AND (:colorId IS NULL OR po.color.id = :colorId) " +
 		       "AND (:minPrice IS NULL OR p.price >= :minPrice) " +
 		       "AND (:maxPrice IS NULL OR p.price <= :maxPrice) " +
-		       "AND (:styleId IS NULL OR s.id = :styleId) " + 
-		       "AND (:categoryId IS NULL OR p.category.id = :categoryId) " + 
+		       "AND (:styleId IS NULL OR s.id = :styleId) " +
+		       "AND (:categoryId IS NULL OR p.category.id = :categoryId) " +
 		       "ORDER BY " +
 		       "CASE WHEN :sortBy = 'price' AND :sortOrder = 'asc' THEN p.price END ASC, " +
 		       "CASE WHEN :sortBy = 'price' AND :sortOrder = 'desc' THEN p.price END DESC, " +
 		       "CASE WHEN :sortBy = 'averageStars' AND :sortOrder = 'asc' THEN p.averageStars END ASC, " +
-		       "CASE WHEN :sortBy = 'averageStars' AND :sortOrder = 'desc' THEN p.averageStars END DESC")
+		       "CASE WHEN :sortBy = 'averageStars' AND :sortOrder = 'desc' THEN p.averageStars END DESC, " +
+		       "p.id ASC") 
 		List<Product> findProducts(@Param("sizeId") Long sizeId,
-		                            @Param("minPrice") Double minPrice,
-		                            @Param("maxPrice") Double maxPrice,
-		                            @Param("colorId") Long colorId,
-		                            @Param("styleId") Long styleId, 
-		                            @Param("categoryId") Long categoryId, 
-		                            @Param("sortBy") String sortBy,
-		                            @Param("sortOrder") String sortOrder);
+		                           @Param("minPrice") Double minPrice,
+		                           @Param("maxPrice") Double maxPrice,
+		                           @Param("colorId") Long colorId,
+		                           @Param("styleId") Long styleId, 
+		                           @Param("categoryId") Long categoryId, 
+		                           @Param("sortBy") String sortBy,
+		                           @Param("sortOrder") String sortOrder);
+
 
 
 }

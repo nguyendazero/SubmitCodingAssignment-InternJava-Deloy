@@ -47,9 +47,6 @@ public class ProductController {
 	    APICustomize<List<ProductResponse>> response = productService.products(sizeId, minPrice, maxPrice, colorId,
 	            styleId, categoryId, sortBy, sortOrder, page, size);
 	    
-	    if (response.getResult().isEmpty()) {
-	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-	    }
 	    return ResponseEntity.ok(response);
 	}
 
@@ -60,7 +57,7 @@ public class ProductController {
         return ResponseEntity.ok(response);
     }
 	
-	@PostMapping
+	@PostMapping("")
     public ResponseEntity<String> createProduct(@RequestBody @Valid ProductRequest productRequest) {
         
 		Product product = new Product();
