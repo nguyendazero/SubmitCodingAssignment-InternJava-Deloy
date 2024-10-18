@@ -31,7 +31,7 @@ public class Product {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 	
 	@ValidProductName(message = "Tên sản phẩm không được chứa số model")
 	@Column(name = "product_name",nullable = false)
@@ -44,13 +44,13 @@ public class Product {
 	@Column(name = "average_stars", nullable = false)
 	@Min(0)
     @Max(5)
-	private double averageStars;
+	private Double averageStars;
 	
 	@Column(name = "price", nullable = false)
-	private double price;
+	private Double price;
 	
 	@Column(name = "total_view", nullable = false)
-	private long totalView;
+	private Long totalView;
 	
 	@Column(name = "sale_end_date")
 	private Date saleEndDate;

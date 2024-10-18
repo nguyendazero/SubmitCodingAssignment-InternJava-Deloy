@@ -2,10 +2,9 @@ package com.task_haibazo.dto.request;
 
 import java.util.Date;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-
+import com.task_haibazo.validation.annotation.NotAm;
 import com.task_haibazo.validation.annotation.ValidProductName;
+import com.task_haibazo.validation.annotation.ValidRange;
 
 import jakarta.persistence.Lob;
 import jakarta.validation.constraints.Future;
@@ -22,30 +21,27 @@ public class ProductRequest {
     private String productName;
 
     @Lob
-    @NotNull(message = "Mô tả không được để null")
+    @NotBlank(message = "mô tả sản phảm không được để trống")
     private String description;
-    
-    @Min(0)
-    @Max(5)
-    private double averageStars;
-    
-    @Min(0)
-    private double price; // hoặc sử dụng BigDecimal
 
-    @Min(0)
-    private long totalView;
-    
+    @ValidRange(min = 0, max = 5, message = "Số sao trung bình phải từ 0 đến 5")
+    private Double averageStars;  
+
+    @NotAm(message = "giá tiền không được nhỏ hơn 0")
+    private Double price;
+
+    private Long totalView;
+
     @Future(message = "Ngày kết thúc bán phải trong tương lai")
     private Date saleEndDate;
-    
-    @Min(0)
-    @Max(100)
-    private int discount;
-    
+
+    @ValidRange(min = 0, max = 100, message = "Giảm giá phải từ 0 đến 100")
+    private Double discount;
+
     @Lob
     @NotNull(message = "Ảnh sản phẩm không được để trống")
     private String image;
-    
+
     @NotNull(message = "Thể loại sản phẩm không được để trống")
-    private long categoryId;
+    private Long categoryId;
 }

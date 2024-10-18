@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +18,10 @@ import com.task_haibazo.dto.response.ProductDetailResponse;
 import com.task_haibazo.dto.response.ProductResponse;
 import com.task_haibazo.entity.Product;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.http.HttpStatus;
 import com.task_haibazo.service.ProductService;
 
@@ -58,11 +62,12 @@ public class ProductController {
     }
 	
 	@PostMapping("")
-    public ResponseEntity<String> createProduct(@RequestBody @Valid ProductRequest productRequest) {
+	public ResponseEntity<String> createProduct(@RequestBody @Valid ProductRequest productRequest) {
         
 		Product product = new Product();
 		product.setProductName(productRequest.getProductName());
 
         return ResponseEntity.status(HttpStatus.CREATED).body("Sản phẩm hợp lệ và đã được tạo!");
     }
+
 }
