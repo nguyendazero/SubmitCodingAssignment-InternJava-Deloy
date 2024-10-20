@@ -58,7 +58,7 @@ public class Product {
 	@Column(name = "discount")
 	@Min(0)
     @Max(100)
-	private int discount;
+	private Double discount;
 	
 	@Lob
 	@Column(name = "image", nullable = false)

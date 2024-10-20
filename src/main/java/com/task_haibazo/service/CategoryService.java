@@ -10,5 +10,7 @@ public interface CategoryService {
 	
 	 public APICustomize<List<CategoryResponse>> categories() ; 
 	 
+	 public APICustomize<CategoryResponse> category(long id);
+	 
 	 public APICustomize<CategoryResponse> save(CategoryRequest categoryRequest);
 }

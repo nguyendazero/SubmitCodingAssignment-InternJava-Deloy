@@ -1,6 +1,7 @@
 package com.task_haibazo.serviceImpl;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import com.task_haibazo.dto.response.APICustomize;
 import com.task_haibazo.dto.response.CategoryResponse;
 import com.task_haibazo.entity.Category;
 import com.task_haibazo.enums.ApiError;
+import com.task_haibazo.exception.ProductNotFoundException;
 import com.task_haibazo.repository.CategoryRepository;
 
 import com.task_haibazo.service.CategoryService;
@@ -50,4 +52,22 @@ public class CategoryServiceImpl implements CategoryService{
 	        CategoryResponse categoryResponse = new CategoryResponse(savedCategory.getId(), savedCategory.getCategorName());
 	        return new APICustomize<>(ApiError.CREATED.getCode(), ApiError.CREATED.getMessage(), categoryResponse);
 	    }
+
+	@Override
+	public APICustomize<CategoryResponse> category(long id) {
+		Optional<Category> categotyOpt = categoryRepository.findById(id);
+        if (categotyOpt.isPresent()) {
+        	Category categoty = categotyOpt.get();
+
+            CategoryResponse categoryDetail = new CategoryResponse(
+            		categoty.getId(),
+            		categoty.getCategorName()
+
+            );
+            return new APICustomize<>(ApiError.OK.getCode(), ApiError.OK.getMessage(), categoryDetail);
+        } else {
+        	throw new ProductNotFoundException("Category with ID " + id + " not found.");
+        }
+	}
+	
 }

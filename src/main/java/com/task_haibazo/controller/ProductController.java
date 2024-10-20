@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.task_haibazo.dto.request.ProductRequest;
 import com.task_haibazo.dto.response.APICustomize;
+import com.task_haibazo.dto.response.CategoryResponse;
 import com.task_haibazo.dto.response.ProductDetailResponse;
 import com.task_haibazo.dto.response.ProductResponse;
 import com.task_haibazo.entity.Product;
@@ -62,12 +63,10 @@ public class ProductController {
     }
 	
 	@PostMapping("")
-	public ResponseEntity<String> createProduct(@RequestBody @Valid ProductRequest productRequest) {
-        
-		Product product = new Product();
-		product.setProductName(productRequest.getProductName());
+    public ResponseEntity<String> createProduct(@RequestBody @Valid ProductRequest productRequest) {
 
-        return ResponseEntity.status(HttpStatus.CREATED).body("Sản phẩm hợp lệ và đã được tạo!");
+        APICustomize<ProductResponse> apiResponse = productService.save(productRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Sản phẩm đã được tạo thành công!");
     }
 
 }

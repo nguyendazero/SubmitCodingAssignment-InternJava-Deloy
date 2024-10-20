@@ -1,5 +1,6 @@
 package com.task_haibazo.exception;
 
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -73,4 +74,5 @@ public class GlobalExceptionHandler {
         );
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
     }
+  
 }

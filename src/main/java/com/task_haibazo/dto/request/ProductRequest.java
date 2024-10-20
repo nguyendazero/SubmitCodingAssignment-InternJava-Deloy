@@ -32,7 +32,7 @@ public class ProductRequest {
 
     private Long totalView;
 
-    @Future(message = "Ngày kết thúc bán phải trong tương lai")
+    @Future(message = "Ngày kết thúc bán phải trong tương lai!")
     private Date saleEndDate;
 
     @ValidRange(min = 0, max = 100, message = "Giảm giá phải từ 0 đến 100")
